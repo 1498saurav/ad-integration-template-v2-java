@@ -4,10 +4,15 @@
 # ~~~~
 
 # An example controller showing a sample home page
++nocsrf
 GET     /                           controllers.HomeController.index()
++nocsrf
 GET     /login                      controllers.HomeController.login()
++nocsrf
 POST    /loginSubmit                controllers.HomeController.loginSubmit()
++nocsrf
 GET     /logout                     controllers.HomeController.logout()
 
 # Map static resources from the /public folder to the /assets URL path
++nocsrf
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
