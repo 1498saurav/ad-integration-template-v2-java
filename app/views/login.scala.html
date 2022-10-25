@@ -1,0 +1,19 @@
+@(userForm: Form[models.User])
+@import helper._
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    @form(action = routes.HomeController.loginSubmit()){
+        @CSRF.formField
+
+        @inputText(userForm("username"),'_label -> "Username",'class -> "form-control")
+        @inputPassword(userForm("password"),'_label -> "Password",'class -> "form-control")
+        <input type="submit" value="Login" class="btn btn-primary">
+    }
+</body>
+</html>
