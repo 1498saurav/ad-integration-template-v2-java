@@ -1,5 +1,13 @@
-@(user: models.User)
+@(user: models.User,isLoggedIn: Boolean)
 
-@main("Welcome to Play") {
-  <h1>Welcome @user.getUsername</h1>
+
+@if(isLoggedIn){
+    @main("Welcome to Play",isLoggedIn) {
+            <p>Welcome @user.getUsername()</p>
+        }
+}else{
+    @isLoggedIn
+    <p>Welcome to API Management Portal! You are not logged in please navigate to /login</p>
 }
+
+

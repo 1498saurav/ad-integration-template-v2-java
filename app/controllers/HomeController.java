@@ -5,8 +5,10 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.index;
 import views.html.login;
+import play.mvc.Http.*;
 
 import javax.inject.Inject;
 
@@ -20,8 +22,7 @@ public class HomeController extends Controller {
     }
 
     public Result index() {
-        User user=new User("HardCodedU","HardCodedP!");
-        return ok(index.render(user));
+        return ok(index.render(new User(),Authorised.isLoggedIn(ctx())));
     }
 
     public Result login(){
@@ -39,8 +40,15 @@ public class HomeController extends Controller {
         User user=userForm.get();
 
         System.out.println(user.getUsername()+"\n"+user.getPassword());
+        session().clear();
+        session("username", user.getUsername());
+        return ok(index.render(user, Authorised.isLoggedIn(ctx())));
+    }
 
-        return ok(index.render(user));
+    @Security.Authenticated(Authorised.class)
+    public  Result logout() {
+        session().clear();
+        return redirect(routes.HomeController.index());
     }
 
 }
